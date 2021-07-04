@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         id="com.navalgroup.capella.modelicalink"
+         name="ModelicaLink"
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="com.navalgroup.capella.modelicalink.commands.ExportToModelicaHandler"
+            id="com.navalgroup.capella.modelicalink.command1"
+            name="name">
+      </command>
+   </extension>
+   <extension
+         name="Modelica"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=additions">
+         <command
+               commandId="com.navalgroup.capella.modelicalink.command1"
+               label="Export to Modelica"
+               style="push"
+               tooltip="Export to Modelica">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
