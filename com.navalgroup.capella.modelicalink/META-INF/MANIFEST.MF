@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ModelicaLink
+Bundle-SymbolicName: com.navalgroup.capella.modelicalink;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.navalgroup.capella.modelicalink.Activator
+Bundle-Vendor: NAVALGROUP
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: com.navalgroup.capella.modelicalink
+Bundle-ActivationPolicy: lazy
