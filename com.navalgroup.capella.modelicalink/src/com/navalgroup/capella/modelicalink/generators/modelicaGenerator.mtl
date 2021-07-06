@@ -49,10 +49,22 @@ VERIFICATION
 [/template]
 
 [template private generateModelicaVerification(pc: PhysicalComponent, basePath: String)]
+[file(basePath + 'VERIFICATION/package.mo', false,'UTF-8')]
+within [pc.name/];
+package VERIFICATION
+
+end VERIFICATION;
+[/file]
 
 [/template]
 
 [template private generateModelicaValidation(pc: PhysicalComponent, basePath: String)]
+[file(basePath + 'VALIDATION/package.mo', false,'UTF-8')]
+within [pc.name/];
+package VALIDATION
+
+end VALIDATION;
+[/file]
 
 [/template]
 
