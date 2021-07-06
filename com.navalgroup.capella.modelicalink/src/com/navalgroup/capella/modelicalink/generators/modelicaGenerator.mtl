@@ -9,25 +9,29 @@
 Plein de choses
 [/file]
 
-[generatePhysicalComponent(pc, pc.name + '/')/]
+[generatePhysicalComponent(pc, pc.name + '/', '')/]
 [/template]
 
-[template private generatePhysicalComponent(pc: PhysicalComponent, basePath : String)]
-[generateComponentPackage(pc, basePath)/]
+[template private generatePhysicalComponent(pc: PhysicalComponent, basePath : String, parentFolder : String)]
+[generateComponentPackage(pc, basePath, parentFolder)/]
 [generateComponentPackageOrder(pc, basePath)/]
 [generateModelicaComponent(pc, basePath)/]
-[generateModelicaVerification(pc, basePath)/]
-[generateModelicaValidation(pc, basePath)/]
-[generateSubComponentsPackage(pc, basePath)/]
+[generateModelicaVerification(pc, basePath, parentFolder)/]
+[generateModelicaValidation(pc, basePath, parentFolder)/]
+[generateSubComponentsPackage(pc, basePath, parentFolder)/]
 [for (innerComp : PhysicalComponent | pc.ownedPhysicalComponents)]
-	[generatePhysicalComponent(innerComp, basePath + '/COMPONENTS/' + innerComp.name + '/')/]
+	[if(parentFolder.size() > 0)]
+		[generatePhysicalComponent(innerComp, basePath + '/COMPOSANTS/' + innerComp.name + '/', parentFolder + '.' + pc.name + '.COMPOSANTS')/]		
+	[else]
+		[generatePhysicalComponent(innerComp, basePath + '/COMPOSANTS/' + innerComp.name + '/', pc.name + '.COMPOSANTS')/]
+	[/if]
 [/for]
 [/template]
 
 
-[template private generateComponentPackage(pc: PhysicalComponent, basePath: String)]
+[template private generateComponentPackage(pc: PhysicalComponent, basePath: String, parentFolder : String)]
 [file(basePath + 'package.mo', false,'UTF-8')]
-within ;
+within [parentFolder/];
 package [pc.name/] "[pc.name/] REF0001"
 end [pc.name/];
 [/file]
@@ -36,9 +40,9 @@ end [pc.name/];
  
 [template private generateComponentPackageOrder(pc: PhysicalComponent, basePath: String)]
 [file(basePath + 'package.order', false,'UTF-8')]
-COMPONENTS
-VALIDATION
+COMPOSANTS
 VERIFICATION
+VALIDATION
 [pc.name/]
 [/file]
 
@@ -48,34 +52,39 @@ VERIFICATION
 
 [/template]
 
-[template private generateModelicaVerification(pc: PhysicalComponent, basePath: String)]
+[template private generateModelicaVerification(pc: PhysicalComponent, basePath: String, parentFolder : String)]
 [file(basePath + 'VERIFICATION/package.mo', false,'UTF-8')]
-within [pc.name/];
+within [if (parentFolder.size() > 0)][parentFolder + '.'/][/if][pc.name/];
 package VERIFICATION
 
 end VERIFICATION;
 [/file]
+[file(basePath + 'VERIFICATION/package.order', false,'UTF-8')]
+VERIF_[pc.name/]
+[/file]
 
 [/template]
 
-[template private generateModelicaValidation(pc: PhysicalComponent, basePath: String)]
+[template private generateModelicaValidation(pc: PhysicalComponent, basePath: String, parentFolder : String)]
 [file(basePath + 'VALIDATION/package.mo', false,'UTF-8')]
-within [pc.name/];
+within [if (parentFolder.size() > 0)][parentFolder + '.'/][/if][pc.name/];
 package VALIDATION
 
 end VALIDATION;
 [/file]
-
+[file(basePath + 'VALIDATION/package.order', false,'UTF-8')]
+VALID_[pc.name/]
+[/file]
 [/template]
 
-[template private generateSubComponentsPackage(pc: PhysicalComponent, basePath: String)]
-[file(basePath + 'COMPONENTS/package.mo', false,'UTF-8')]
-within [pc.name/];
-package COMPONENTS
-end COMPONENTS;
+[template private generateSubComponentsPackage(pc: PhysicalComponent, basePath: String, parentFolder : String)]
+[file(basePath + 'COMPOSANTS/package.mo', false,'UTF-8')]
+within [if (parentFolder.size() > 0)][parentFolder + '.'/][/if][pc.name/];
+package COMPOSANTS
+end COMPOSANTS;
 [/file]
 
-[file(basePath + 'COMPONENTS/package.order', false,'UTF-8')]
+[file(basePath + 'COMPOSANTS/package.order', false,'UTF-8')]
 [for (innerComp : PhysicalComponent | pc.ownedPhysicalComponents)]
 [innerComp.name/]
 [/for]
