@@ -1,11 +1,78 @@
 [comment encoding = UTF-8 /]
 [module modelicaGenerator('http://www.polarsys.org/capella/core/pa/1.4.0')]
 
+
 [template public modelicaGenerator(pc : PhysicalComponent)]
 [comment @main/]
-[file(pc.name + '.mo', false, 'UTF-8')]
-Coucou les gens
+[file('test.name', false,'UTF-8')]
+[pc.name + '/'/]
+Plein de choses
 [/file]
+
+[generatePhysicalComponent(pc, pc.name + '/')/]
 [/template]
+
+[template private generatePhysicalComponent(pc: PhysicalComponent, basePath : String)]
+[generateComponentPackage(pc, basePath)/]
+[generateComponentPackageOrder(pc, basePath)/]
+[generateModelicaComponent(pc, basePath)/]
+[generateModelicaVerification(pc, basePath)/]
+[generateModelicaValidation(pc, basePath)/]
+[generateSubComponentsPackage(pc, basePath)/]
+[for (innerComp : PhysicalComponent | pc.ownedPhysicalComponents)]
+	[generatePhysicalComponent(innerComp, basePath + '/COMPONENTS/' + innerComp.name + '/')/]
+[/for]
+[/template]
+
+
+[template private generateComponentPackage(pc: PhysicalComponent, basePath: String)]
+[file(basePath + 'package.mo', false,'UTF-8')]
+within ;
+package [pc.name/] "[pc.name/] REF0001"
+end [pc.name/];
+[/file]
+
+[/template]
+ 
+[template private generateComponentPackageOrder(pc: PhysicalComponent, basePath: String)]
+[file(basePath + 'package.order', false,'UTF-8')]
+COMPONENTS
+VALIDATION
+VERIFICATION
+[pc.name/]
+[/file]
+
+[/template]
+
+[template private generateModelicaComponent(pc: PhysicalComponent, basePath: String)]
+
+[/template]
+
+[template private generateModelicaVerification(pc: PhysicalComponent, basePath: String)]
+
+[/template]
+
+[template private generateModelicaValidation(pc: PhysicalComponent, basePath: String)]
+
+[/template]
+
+[template private generateSubComponentsPackage(pc: PhysicalComponent, basePath: String)]
+[file(basePath + 'COMPONENTS/package.mo', false,'UTF-8')]
+within [pc.name/];
+package COMPONENTS
+end COMPONENTS;
+[/file]
+
+[file(basePath + 'COMPONENTS/package.order', false,'UTF-8')]
+[for (innerComp : PhysicalComponent | pc.ownedPhysicalComponents)]
+[innerComp.name/]
+[/for]
+[/file]
+
+[/template]
+
+
+
+
 
 

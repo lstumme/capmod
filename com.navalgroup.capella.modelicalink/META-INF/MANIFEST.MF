@@ -17,6 +17,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: com.navalgroup.capella.modelicalink
 Bundle-ActivationPolicy: lazy
 Export-Package: com.navalgroup.capella.modelicalink,
- com.navalgroup.capella.modelicalink.generators
+ com.navalgroup.capella.modelicalink.generators,
+ com.navalgroup.capella.modelicalink.handlers
 
 
