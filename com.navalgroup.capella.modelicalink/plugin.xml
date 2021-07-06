@@ -16,11 +16,24 @@
             name="name">
       </command>
    </extension>
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=additions">
+         
+         <menu id="com.navalgroup.capella.modelica.contextMenu"
+              label="MODELICA">
+
+              <separator visible="true" name="mainCommands"/>
+              <separator visible="true" name="additions"/>
+
+         </menu>
+      </menuContribution>
+   </extension>
+   
    <extension
          name="Modelica"
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=additions">
+            locationURI="popup:com.navalgroup.capella.modelica.contextMenu?after=mainCommands">
          <command
                commandId="com.navalgroup.capella.modelicalink.command1"
                label="Export to Modelica"
