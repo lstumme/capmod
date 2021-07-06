@@ -17,7 +17,7 @@
       </command>
    </extension>
    <extension point="org.eclipse.ui.menus">
-      <menuContribution locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=additions">
+      <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          
          <menu id="com.navalgroup.capella.modelica.contextMenu"
               label="MODELICA">
