@@ -1,46 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         id="com.navalgroup.capella.modelicalink"
-         name="ModelicaLink"
-         point="org.eclipse.ui.commands">
-	  <category
-            id="com.navalgroup.capella.modelica.commandcategory"
-            name="Modelica commands">
-      </category>
-      <command
-            defaultHandler="com.navalgroup.capella.modelicalink.handlers.ExportToModelicaHandler"
-            categoryId="com.navalgroup.capella.modelica.commandcategory"
-            id="com.navalgroup.capella.modelicalink.command1"
-            name="name">
-      </command>
-   </extension>
-   <extension point="org.eclipse.ui.menus">
-      <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         
-         <menu id="com.navalgroup.capella.modelica.contextMenu"
-              label="MODELICA">
+	<extension
+ 		id="com.navalgroup.capella.modelicalink"
+ 		name="ModelicaLink"
+ 		point="org.eclipse.ui.commands">
+  		<category
+			id="com.navalgroup.capella.modelica.commandcategory"
+			name="Modelica commands">
+  		</category>
+  		<command
+			defaultHandler="com.navalgroup.capella.modelicalink.handlers.ExportToModelicaHandler"
+			categoryId="com.navalgroup.capella.modelica.commandcategory"
+			id="com.navalgroup.capella.modelicalink.command1"
+			name="name">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+ 			<menu id="com.navalgroup.capella.modelica.contextMenu"
+  				  label="MODELICA">
 
-              <separator visible="true" name="mainCommands"/>
-              <separator visible="true" name="additions"/>
-
-         </menu>
-      </menuContribution>
-   </extension>
+			<separator visible="true" name="mainCommands"/>
+			<separator visible="true" name="additions"/>
+ 			</menu>
+		</menuContribution>
+ 	</extension>
    
-   <extension
-         name="Modelica"
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:com.navalgroup.capella.modelica.contextMenu?after=mainCommands">
-         <command
-               commandId="com.navalgroup.capella.modelicalink.command1"
-               label="Export to Modelica"
-               style="push"
-               tooltip="Export to Modelica">
-         </command>
-      </menuContribution>
-   </extension>
+	<extension
+		name="Modelica"
+		point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:com.navalgroup.capella.modelica.contextMenu?after=mainCommands">
+ 			<command
+				commandId="com.navalgroup.capella.modelicalink.command1"
+				label="Export to Modelica"
+				style="push"
+				tooltip="Export to Modelica">
+ 				<visibleWhen checkEnabled="false">
+					<with variable="activeMenuSelection">
+						<iterate ifEmpty="false">
+ 							<or>
+   								<!-- Enable on Diagram elements -->
+   								<instanceof
+ 									value="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+								</instanceof>
 
+								<!-- Enable on Model elements -->
+								<instanceof
+									value="org.eclipse.emf.ecore.EObject">
+								</instanceof>
+							</or>
+						</iterate>
+					</with>
+				</visibleWhen>
+ 			</command>
+		</menuContribution>
+	</extension>
 </plugin>
