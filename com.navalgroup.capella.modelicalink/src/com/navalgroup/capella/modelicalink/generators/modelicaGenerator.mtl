@@ -1,0 +1,11 @@
+[comment encoding = UTF-8 /]
+[module modelicaGenerator('http://www.polarsys.org/capella/core/pa/1.4.0')]
+
+[template public modelicaGenerator(pc : PhysicalComponent)]
+[comment @main/]
+[file(pc.name + '.mo', false, 'UTF-8')]
+Coucou les gens
+[/file]
+[/template]
+
+
