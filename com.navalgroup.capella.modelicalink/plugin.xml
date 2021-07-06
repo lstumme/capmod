@@ -6,7 +6,7 @@
          name="ModelicaLink"
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="com.navalgroup.capella.modelicalink.commands.ExportToModelicaHandler"
+            defaultHandler="com.navalgroup.capella.modelicalink.handlers.ExportToModelicaHandler"
             id="com.navalgroup.capella.modelicalink.command1"
             name="name">
       </command>
