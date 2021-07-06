@@ -5,8 +5,13 @@
          id="com.navalgroup.capella.modelicalink"
          name="ModelicaLink"
          point="org.eclipse.ui.commands">
+	  <category
+            id="com.navalgroup.capella.modelica.commandcategory"
+            name="Modelica commands">
+      </category>
       <command
             defaultHandler="com.navalgroup.capella.modelicalink.handlers.ExportToModelicaHandler"
+            categoryId="com.navalgroup.capella.modelica.commandcategory"
             id="com.navalgroup.capella.modelicalink.command1"
             name="name">
       </command>
