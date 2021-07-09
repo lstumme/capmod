@@ -27,7 +27,7 @@
 [template private generateComponentPackage(pc: PhysicalComponent, basePath: String, parentFolder : String)]
 [file(basePath + 'package.mo', false,'UTF-8')]
 within [parentFolder/];
-package [pc.name/] "[pc.name/] REF0001"
+package [pc.name/] "[pc.name/] from Capella PA"
 end [pc.name/];
 [/file]
 
@@ -46,7 +46,7 @@ VALIDATION
 [template private generateModelicaComponent(pc: PhysicalComponent, basePath: String, parentFolder : String)]
 [file(basePath + pc.name + '.mo', false,'UTF-8')]
 within [if (parentFolder.size() > 0)][parentFolder + '.'/][/if][pc.name/];
-model [pc.name/] "[pc.name/] REF0001"
+model [pc.name/] "[pc.name/] from Capella PA"
 
 equation
 
