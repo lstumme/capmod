@@ -4,18 +4,13 @@
 
 [template public modelicaGenerator(pc : PhysicalComponent)]
 [comment @main/]
-[file('test.name', false,'UTF-8')]
-[pc.name + '/'/]
-Plein de choses
-[/file]
-
 [generatePhysicalComponent(pc, pc.name + '/', '')/]
 [/template]
 
 [template private generatePhysicalComponent(pc: PhysicalComponent, basePath : String, parentFolder : String)]
 [generateComponentPackage(pc, basePath, parentFolder)/]
 [generateComponentPackageOrder(pc, basePath)/]
-[generateModelicaComponent(pc, basePath)/]
+[generateModelicaComponent(pc, basePath, parentFolder)/]
 [generateModelicaVerification(pc, basePath, parentFolder)/]
 [generateModelicaValidation(pc, basePath, parentFolder)/]
 [generateSubComponentsPackage(pc, basePath, parentFolder)/]
@@ -48,8 +43,15 @@ VALIDATION
 
 [/template]
 
-[template private generateModelicaComponent(pc: PhysicalComponent, basePath: String)]
+[template private generateModelicaComponent(pc: PhysicalComponent, basePath: String, parentFolder : String)]
+[file(basePath + pc.name + '.mo', false,'UTF-8')]
+within [if (parentFolder.size() > 0)][parentFolder + '.'/][/if][pc.name/];
+model [pc.name/] "[pc.name/] REF0001"
 
+equation
+
+end [pc.name/];
+[/file]
 [/template]
 
 [template private generateModelicaVerification(pc: PhysicalComponent, basePath: String, parentFolder : String)]
@@ -63,6 +65,15 @@ end VERIFICATION;
 VERIF_[pc.name/]
 [/file]
 
+[file(basePath + 'VERIFICATION/VERIF_' + pc.name + '.mo', false,'UTF-8')]
+within [parentFolder/].[pc.name/].VERIFICATION;
+model VERIF_[pc.name/]
+
+equation
+
+end VERIF_[pc.name/];
+[/file]
+
 [/template]
 
 [template private generateModelicaValidation(pc: PhysicalComponent, basePath: String, parentFolder : String)]
@@ -74,6 +85,16 @@ end VALIDATION;
 [/file]
 [file(basePath + 'VALIDATION/package.order', false,'UTF-8')]
 VALID_[pc.name/]
+[/file]
+
+[file(basePath + 'VALIDATION/VALID_' + pc.name + '.mo', false,'UTF-8')]
+within [parentFolder/].[pc.name/].VALIDATION;
+model VALID_[pc.name/]
+
+equation
+
+end VALID_[pc.name/];
+
 [/file]
 [/template]
 

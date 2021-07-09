@@ -1,10 +1,7 @@
 package com.navalgroup.capella.modelicalink.handlers;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,33 +24,19 @@ public class ExportToModelicaHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		BufferedWriter writer;
-		try {
-			writer = new BufferedWriter(
-					new FileWriter("C:\\Users\\Ludo\\Documents\\Development\\capella\\workspace\\output.log"));
-			writer.write(event.toString() + "\r\n");
-			ISelection selection = HandlerUtil.getCurrentSelection(event);
-			writer.write(selection.toString() + "\r\n");
-			Collection<EObject> semanticElements = CapellaAdapterHelper
-					.resolveSemanticObjects(((IStructuredSelection) selection).toList());
-			writer.write(semanticElements.toString() + "\r\n");
-			for (EObject object : semanticElements) {
-				writer.write(object.toString() + "\r\n");
-				if (object instanceof PhysicalComponent) {
-					writer.write("Object is PhysicalComponent\r\n");
-					try {
-						ModelicaGenerator generator = new ModelicaGenerator(object, new File(destPath),
-								new ArrayList<String>());
-						generator.generate(new BasicMonitor());
-					} catch (IOException e) {
-						e.printStackTrace(new PrintWriter(writer));
-					}
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		Collection<EObject> semanticElements = CapellaAdapterHelper
+				.resolveSemanticObjects(((IStructuredSelection) selection).toList());
+		for (EObject object : semanticElements) {
+			if (object instanceof PhysicalComponent) {
+				try {
+					ModelicaGenerator generator = new ModelicaGenerator(object, new File(destPath),
+							new ArrayList<String>());
+					generator.generate(new BasicMonitor(), false);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
-			writer.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		return null;
 	}
